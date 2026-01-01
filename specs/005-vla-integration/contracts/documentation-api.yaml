@@ -1,0 +1,78 @@
+openapi: 3.0.0
+info:
+  title: Documentation API
+  version: 1.0.0
+  description: API for managing documentation content
+paths:
+  /modules:
+    get:
+      summary: Get all documentation modules
+      responses:
+        '200':
+          description: List of all documentation modules
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Module'
+  /modules/{moduleId}:
+    get:
+      summary: Get a specific module
+      parameters:
+        - name: moduleId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Module details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Module'
+  /modules/{moduleId}/chapters:
+    get:
+      summary: Get all chapters in a module
+      parameters:
+        - name: moduleId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of chapters in the module
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Chapter'
+components:
+  schemas:
+    Module:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        chapters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Chapter'
+    Chapter:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        content:
+          type: string
+        slug:
+          type: string
